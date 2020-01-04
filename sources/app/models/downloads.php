@@ -26,7 +26,8 @@ class Downloads extends Model
 			throw new \App\Lib\Exception('Unknown media');
 		}
 
-		if(is_null($media->GetFormatInfosById($self->get('format_id'))))
+		//if(is_null($media->GetFormatInfosById($self->get('format_id'))))
+		if (is_null($self->get('format_id')))
 		{
 			throw new \App\Lib\Exception('Unknown format');
 		}
