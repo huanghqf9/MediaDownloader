@@ -4,6 +4,7 @@ namespace App\Models\Objects;
 
 use App\Lib\YoutubeDl;
 use App\Lib\Process;
+use App\Lib\Command;
 
 class Ex_UnknownState extends \App\Lib\Exception {}
 
@@ -116,7 +117,11 @@ class Download extends MObject
 	{
 		return empty($this->mapper->output) ? null : $this->mapper->output . '.part';
 	}
-
+	
+	public function GetOutputFilePath()
+	{
+		return empty($this->mapper->output) ? null : $this->mapper->output;
+	}
 	private function GetMutexId()
 	{
 		return __CLASS__ . $this->mapper->media_id . $this->mapper->format_id;
@@ -172,6 +177,12 @@ class Download extends MObject
 					if(preg_match('/^\[ffmpeg\]\s+Merging formats into\s+"(.*)"$/', $log, $matches))
 					{
 						$this->mapper->output = $matches[1];
+						$cmd_on_success = DIR_BASE . 'mdc downloads ' . $this->_id . ' --state ' . Download::State_Finished;
+						$command_on_success = new Command($cmd_on_success);
+						$cmd = 'rclone copy ' . $this->mapper->output . ' gdrive:/share/download ';
+						$command = new Command($cmd, $this->GetLogFilePath(), $this->GetErrorFilePath());
+						// Run command
+						Process::RunBackground($command, $command_on_succes);
 						$this->mapper->save();
 						break;
 					}
