@@ -70,7 +70,7 @@ abstract class YoutubeDl
 	public static function Download(Download $download)
 	{
 		$cmd = Config::Get('youtubedl_path');
-		$cmd .= ' --output ' . escapeshellarg(Config::instance()->download_path . '%(title)s-%(uploader)s-' . $download->format_id . '.%(ext)s');
+		$cmd .= ' --output ' . escapeshellarg($download->download_path . '%(title)s-%(uploader)s-' . $download->format_id . '.%(ext)s');
 		$cmd .= ' --restrict-filenames'; // --restrict-filenames is for specials chars
 		$cmd .= ' --load-info-json ' . escapeshellarg($download->GetMedia()->GetInfoFilePath());
 		$cmd .= ' --format ' . $download->format_id;
@@ -83,7 +83,7 @@ abstract class YoutubeDl
 		$command_on_success = new Command($cmd_on_success);
 
 		// Run command
-		Process::RunBackground($command, $command_on_succes);
+		Process::RunBackground($command, $command_on_success);
 
 		// Search for youtubedl subprocess pid
 		if(is_null($pid = Process::SearchPid(['python ' . Config::Get('youtubedl_path'), $download->media_id, 'format ' . $download->format_id])))
