@@ -2,7 +2,6 @@
 
 namespace App\Models\Objects;
 
-use App\Lib\Command;
 use App\Lib\YoutubeDl;
 use App\Lib\Process;
 use App\Lib\Command;
@@ -182,7 +181,7 @@ class Download extends MObject
 						$this->mapper->output = $matches[1];
 						$cmd_on_success = DIR_BASE . 'mdc downloads ' . $this->_id . ' --state ' . Download::State_Finished;
 						$command_on_success = new Command($cmd_on_success);
-						$cmd = 'rclone copy ' . $this->mapper->output . ' gdrive:/share/download ';
+						$cmd = 'rclone copy ' . $this->mapper->output . ' amw:/share/download ';
 						$command = new Command($cmd, $this->GetLogFilePath(), $this->GetErrorFilePath());
 						// Run command
 						Process::RunBackground($command, $command_on_succes);
