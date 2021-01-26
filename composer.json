@@ -1,5 +1,5 @@
 {
-    "name": "kallys/MediaDownloader",
+    "name": "kallys/mediadownloader",
     "description": "WebUI for youtube-dl and more!",
     "type": "project",
     "license": "GPL-3.0",
