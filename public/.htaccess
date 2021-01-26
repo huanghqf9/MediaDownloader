@@ -1,6 +1,6 @@
 RewriteEngine On
 # Uncomment the following line if using MediaDownloader on subdirectory (example.org/md/) instead of subdomain (md.example.org/)
-#RewriteBase /md/
+RewriteBase /md/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-l
